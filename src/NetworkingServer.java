@@ -30,6 +30,32 @@ public class NetworkingServer {
                 client = server.accept();
 
                 System.out.println("Connect request is accepted...");
+                String clientHost =
+                    client.getInetAddress().getHostAddress();
+                int clientPort = client.getPort();
+                System.out.println("Client host =" + clientHost + "Client port = " + clientPort);
+
+                //Read data from the client
+                InputStream clientIn = client.getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(clientIn));
+                String msgFromClient = br.readLine();
+                System.out.println("Message received from client = " + msgFromClient);
+
+                //Send response to the client
+                if(msgFromClient != null && !msgFromClient.equalsIgnoreCase("bye")) {
+                    OutputStream clientOut = client.getOutputStream();
+                    PrintWriter pw = new PrintWriter(clientOut, true);
+                    String ansMsg = "Hello, " + msgFromClient;
+                    pw.println(ansMsg);
+                }
+                //Close sockets
+                if(msgFromClient != null && msgFromClient.equalsIgnoreCase("bye")){
+                    server.close();
+                    client.close();
+                    break;
+                }
+            } catch (IOException ie){
+                System.out.println("Could not be connected.");
             }
         }
 
