@@ -7,11 +7,11 @@ public class NetworkingServer {
             Socket client;
 
             //Default port number we are going to use
-            int portnumber = 1234;
+            int portnumber = 2525;
             if(args.length >= 1){
                 portnumber = Integer.parseInt(args[0]);
             }
-        //Create server side socket
+        //Create Server side socket
         try{
             server = new ServerSocket(portnumber);
         } catch (IOException ie) {
@@ -33,7 +33,7 @@ public class NetworkingServer {
                 String clientHost =
                     client.getInetAddress().getHostAddress();
                 int clientPort = client.getPort();
-                System.out.println("Client host =" + clientHost + "Client port = " + clientPort);
+                System.out.println("Client host = " + clientHost + " Client port = " + clientPort);
 
                 //Read data from the client
                 InputStream clientIn = client.getInputStream();
